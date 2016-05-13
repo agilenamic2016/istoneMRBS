@@ -7,17 +7,22 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, minimum-scale=1, width=device-width, target-densitydpi=medium-dpi" />
         <title>Home Page</title>
         <script type="text/javascript" src="cordova.js"></script>
+        
         <script type="text/javascript" src="js/jquery-mobile/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript">
-            $(document).bind('mobileinit',function(){
-                $.mobile.loadingMessage = false;
-            })
-        </script>  
         <script type="text/javascript" src="js/jquery-mobile/jquery.mobile-1.4.5.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery-ui/jquery-ui.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" href="css/common.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <script type="text/javascript">
+            $(document).ready(function(){});
+            
+            $(document).bind('mobileinit',function(){
+                $.mobile.loadingMessage = false;
+            })
+            
             document.addEventListener("deviceready", onDeviceReady, false);
             var menuStatus;
             
@@ -41,6 +46,7 @@
     </head>
     <body id="pageBody" class="appBody">
         <div data-role="app" class="app" id="app">
+            
             <div class="menuheader">
                 <div class="menuheaderleft">
                     <button class="buttonbg">
@@ -63,10 +69,11 @@
                 </div>
             </div>
             <div class="content">
-                    <input id="loginid" value=""/>
+                    <div id="datepicker"></div>
             </div>
         </div>
         <script>
-            </script>
+$( "#datepicker" ).datepicker();
+</script>
     </body>
 </html>
