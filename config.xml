@@ -50,7 +50,7 @@
     <gap:plugin name="cordova-plugin-network-information" source="npm"/>
     <gap:plugin name="cordova-plugin-splashscreen" source="npm" version="2.1.0"/>
     <gap:plugin name="cordova-plugin-vibration" source="npm"/>
-    <gap:plugin name="nl.x-services.plugins.calendar" version="4.2" />
+    <gap:plugin name="cordova-plugin-calendar" spec="4.4.7" source="pgb"/>
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0"/>
     <gap:plugin name="com.phonegap.plugin.statusbar" spec="1.1.0" source="pgb"/>
     <gap:plugin name="com.phonegap.plugins.PushPlugin"/>
