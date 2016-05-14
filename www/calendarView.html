@@ -7,10 +7,13 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, minimum-scale=1, width=device-width, target-densitydpi=medium-dpi" />
         <title>Home Page</title>
         <script type="text/javascript" src="cordova.js"></script>
+        
         <script type="text/javascript" src="js/jquery-mobile/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="js/jquery-mobile/jquery.mobile-1.4.5.js"></script>
         <script type="text/javascript" src="js/jquery/jquery.js"></script>
-        <script type="text/javascript" src="js/login.js"></script>
+        <script type="text/javascript" src="js/jquery-ui/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" href="css/common.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <script type="text/javascript">
@@ -43,27 +46,34 @@
     </head>
     <body id="pageBody" class="appBody">
         <div data-role="app" class="app" id="app">
-            <div class="inputField" style="top:35%">
-                <img src="img/username.png" class="inputImg"/>
-                <input id="txtLoginId" maxlength="50" type="text" class="inputText"/>
+            
+            <div class="menuheader">
+                <div class="menuheaderleft">
+                    <button class="buttonbg">
+                        <img class="menubutton" src="img/drawer.png"/>
+                    </button>
+                </div>
+                <div class="menuheaderright">
+                     <button class="pagetitle">MRBS</button>
+                    <button class="pageTitileImgBG" id="pageTitileImgBG" onclick=""><img class="pageTitileImg" src="img/trending-w.png"/></button>
+                </div>
             </div>
-            <div class="inputField" style="top:42%">
-                <img src="img/userpassword.png" class="inputImg"/>
-                <input id="txtPassword" maxlength="50" type="password" class="inputText"/>
+            <div class="menubg">
+                <div>
+                    <ul id="slidemenu">
+                        <script type="text/javascript" src="js/slidemenuitem.js"></script>
+                    </ul>    
+                </div>
+                <div class="menufooter">
+                    <img src="img/menufooter-2.png" class="footerimage"/>
+                </div>
             </div>
-            <div class="inputField" style="top:49%;">
-                <button id="btnLogin" class="btnCommon"><img src="img/arrow.png" class="buttonImg"/></button>
+            <div class="content">
+                    <div id="datepicker"></div>
             </div>
         </div>
+        <script>
+$( "#datepicker" ).datepicker();
+</script>
     </body>
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-            $("#btnLogin").on("touchstart",function(startevent){
-                alert("as");
-                
-            });
-            
-        });
-    </script>
 </html>
