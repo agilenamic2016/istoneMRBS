@@ -267,12 +267,12 @@ input:focus {
 /* Input field style */
 .inputField{
     width: 100%;
-    height: 100%;
+    height:10%;
     position: absolute;
 }
 
 .inputImg{
-    height: 6%;
+    height: 6vh;
     width: auto;
     display: inline-block;
     position: absolute;
@@ -280,7 +280,7 @@ input:focus {
 }
 
 .inputText{
-    height: 5%;
+    height: 5vh;
     width: 50%;
     border-radius: 5px;
     display: inline-block;
@@ -289,7 +289,7 @@ input:focus {
 }
 
 .btnCommon{
-    height: 6%;
+    height: 6vh;
     width: 15%;
     background: transparent;
     outline: none;
