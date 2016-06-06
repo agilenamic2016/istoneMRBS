@@ -44,5 +44,9 @@ var app = {
 //-------------------------------------------
 //button action in index page
 function btnLogin_onClick(){
-    window.location="roomList.html";
+    loading.startLoading();
+    var userName=$("#txtLoginId").val();
+    var pwd=$("#txtPassword").val();
+
+    requetLogin(userName, pwd);
 }
