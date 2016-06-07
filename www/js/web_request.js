@@ -17,8 +17,9 @@ function requetLogin(userName, pwd){
       timeout: apiTimeout,    
       success: function(data, status, xhr) {
         debugger;    
-        
-        alert(JSON.stringify(data));
+
+        storeSessionKey(data.SessionKey);
+        //window.location="roomlist.html";
         loading.endLoading();
       },
       error:function (xhr, ajaxOptions, thrownError){
@@ -28,4 +29,28 @@ function requetLogin(userName, pwd){
         loading.endLoading();
       }
     })
+}
+
+function storeSessionKey(sessionKey){
+    insertSessionKey(sessionKey);
+    
+    function insertSessionKey(sessionKey) {
+        db.transaction(function(tx) {
+            tx.executeSql('DELETE FROM sessionKey');
+            tx.executeSql(
+                'INSERT INTO sessionKey (token) VALUES (?)', 
+                sessionKey,
+                successStoreSessionKey,
+                erroStoreSessionKey
+            );
+        });
+    }
+}
+
+function successStoreSessionKey(){
+    alert("success");
+}
+
+function erroStoreSessionKey(err){
+    alert("failed");
 }

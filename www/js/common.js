@@ -26,21 +26,20 @@ var db;
 
 var dbmanager = {
     initdb:function(){
-        db = window.openDatabase("Database", "1.0", "ESLN", 200000);
+        db = window.openDatabase("Database", "1.0", "RBS", 200000);
     },
     
     createTable:function(){
         db.transaction(createTableTransaction, this.errorExecuteSQL, this.successExecuteSQL);
         
         function createTableTransaction(t){
-            t.executeSql('CREATE TABLE IF NOT EXISTS userprofile (uid text, companyid text,name text, email text, profileImg text, role text, token text)');
-            t.executeSql('CREATE TABLE IF NOT EXISTS DMZKEYSLOT (DMZKEY text)');
+            t.executeSql('CREATE TABLE IF NOT EXISTS sessionKey(token text)');
         }
     },
     
     getProfile:function(returnData){
         db.transaction(function(tx){
-            tx.executeSql('SELECT * FROM userprofile', [], function(tx, rs){
+            tx.executeSql('SELECT * FROM sessionKey', [], function(tx, rs){
                 returnData(rs);
           }, this.errorExecuteSQL);
         });
@@ -48,7 +47,7 @@ var dbmanager = {
     
     successExecuteSQL:function(){
         //success to executeSQL
-        //alert("success");
+        alert("success");
     },
     
     errorExecuteSQL:function(err){
@@ -56,23 +55,6 @@ var dbmanager = {
         alert(err.message);
     },
 };
-
-//special dedicated to get dmz key
-function getDMZKeyFromDB(){
-    var defer=$.Deferred();
-
-    db.transaction(function(tx){
-            tx.executeSql('SELECT * FROM DMZKEYSLOT', [], function(tx, rs){
-                defer.resolve(rs.rows);
-          }, errorGetDMZKeyFromDB);
-    });
-    
-    return defer.promise();
-}
-
-function errorGetDMZKeyFromDB(err){
-    alert("fail get dmzkey from db");
-}
 
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
