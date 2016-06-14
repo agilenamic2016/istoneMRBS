@@ -14,14 +14,13 @@
 .pageone{
     background-color: white;
     width: 100%;
-    height: 20%;
+    height: 100%;
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0%;
     display: inline-block;
     position: absolute;
-    bottom: 0;
     z-index: 3;
-/*    position:     absolute;*/
+/*    position: absolute;*/
     
     -webkit-transform: translate3d(0,0,0);
     -moz-transform: translate3d(0,0,0);
@@ -32,13 +31,6 @@
     -moz-transition: transform 400ms ease;
     transition: transform 400ms ease;
 }
-
-.ui-state-active, .ui-widget-content .ui-state-active {
-  /*any CSS styles you want overriden i.e.*/
-  border: 1px solid #999999;
-  background-color: lightskyblue;
-}
-
 /* content page stry end*/
 /* ------------------------------------------------------------------------------------*/
 /* ------------------------------------------------------------------------------------*/
@@ -158,63 +150,3 @@
 /* ------------------------------------------------------------------------------------*/
 /* ------------------------------------------------------------------------------------*/
 /* ------------------------------------------------------------------------------------*/
-
-
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
-/* time selection*/
-.inputLabel{
-    line-height: 8vw;
-    height: 8vw;
-    width: auto;
-    display: inline-block;
-    font-size: 5vw;
-    position: absolute;
-    left:37%;
-}
-
-.comboTime{
-    line-height: 8vw;
-    height: 8vw;
-    width: 20vw;
-    display: inline-block;
-    font-size: 5vw;
-    position: absolute;
-    background: white;
-    z-index: 99;
-}
-
-.comboImg{
-    height: 8vw;
-    width: 8vw;
-    display: inline-block;
-    position: absolute;
-    left:19%;
-}
-
-#btnBook{
-    height: 9vh;
-    width: 15%;
-    background: transparent;
-    outline: none;
-    border: none;
-    position:absolute;
-    right: 2%;
-}
-/* time selection end*/
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
-
-
-
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
-/*Room Info*/
-h1{
-    font-family: "Roboto-Bold";
-    font-size: 4vw;
-    margin-left: 5px;
-}

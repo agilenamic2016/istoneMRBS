@@ -10,7 +10,9 @@
         <script type="text/javascript" src="js/jquery-mobile/jquery.mobile-1.4.5.js"></script>
         <script type="text/javascript" src="js/jquery/jquery.js"></script>
         <script type="text/javascript" src="js/jquery-ui/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/common.js"></script>
+        <script type="text/javascript" src="js/calendarView.js"></script>
+        <script type="text/javascript" src="js/web_request.js"></script>
         <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" href="css/common.css" />
         <link rel="stylesheet" type="text/css" href="css/calendarView.css" />
@@ -51,7 +53,7 @@
                         <img class="menubutton" src="img/arrowleft.png"/>
                     </button>
                 </div>
-                <div><span class="roomName">Room 1</span></div>
+                <div><span class="roomName" id="roomName"></span></div>
                 <div class="menuheaderright">
                      <button class="pagetitle">MRBS</button>
                     <button class="pageTitileImgBG" id="pageTitileImgBG" onclick=""><img class="pageTitileImg" src="img/trending-w.png"/></button>
@@ -69,9 +71,19 @@
             </div>
             <div class="content">
                 <center>
+                    <input type="text" id="dateBooking" style="display:none">
                     <div id="datepicker" style="width:100%"></div>
                 </center>
-                <div class="inputField" style="top:42%;">
+<!--                <textarea id="txtPurpose" maxlength="500"></textarea>-->
+                <div class="inputField" style="top:38%;width:100%">
+                    &nbsp;&nbsp;&nbsp;Title
+                    <input id="txtTitle" maxlength="100" type="text" style="height:7vw;line-height:7vw;width:70%;float:right;margin-right:5%"/>
+                </div>
+                <div class="inputField" style="top:45%;width:100%">
+                     &nbsp;&nbsp;&nbsp;Purpose
+                    <textarea id="txtPurpose" maxlength="100" style="height:21vw;line-height:7vw;width:69%;float:right;margin-right:5%"></textarea>
+                </div>
+                <div class="inputField" style="top:65%;">
                 <img src="img/clock.jpg" class="comboImg" style="left:2%;"/>
                 <select id="startTime" class="comboTime" style="left:13%">
                     <option>00:00</option>
@@ -176,14 +188,15 @@
                     <option>23:30</option>
                 </select>
                 </div>
-                <div class="inputField" style="top:40%;">
+                <div class="inputField" style="top:63%;">
                     <button id="btnBook"><img src="img/booknow.png" class="buttonImg"/></button>
                 </div>
-                <div class="inputField" style="top:53%;"><h1>Booking history</h1></div>
+                <div class="inputField" style="bottom:17%;"><h1>Booking history</h1></div>
                 <div class="pageone">
                     <div class="wrapper" id="wrapper">
                         <div class="scroll-content" id="scroll-content">
                             <ul class="scrollul" id="scrollul">
+<!--
                                 <li class='scrollli' id='featuredrow1' onclick="goCalendar();"><table style='height:100%; width:100%;'><tr><td><h1 class='listviewitemtitle'>Richard Goh</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'>DateTime: 14 May 2016 14:00 - 16:00</p></td></tr></table>
                                 </li>
                                 <li class='scrollli' id='featuredrow1' onclick="goCalendar();"><table style='height:100%; width:100%;'><tr><td><h1 class='listviewitemtitle'>Ahmad Dahlan</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'>DateTime: 14 May 2016 09:00 - 11:00</p></td></tr></table>
@@ -194,6 +207,7 @@
                                 </li>
                                 <li class='scrollli' id='featuredrow1' onclick="goCalendar();"><table style='height:100%; width:100%;'><tr><td><h1 class='listviewitemtitle'>Jason Tan</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'>DateTime: 11 May 2016 09:30 - 10:30</p></td></tr></table>
                                 </li>
+-->
                             </ul>
                             <br>
                         </div>
@@ -202,7 +216,55 @@
             </div>
         </div>
         <script>
-$( "#datepicker" ).datepicker();
-</script>
+            $( "#datepicker" ).datepicker({ minDate: 0,
+                                            altField: '#dateBooking'
+                                          });
+            
+            var theScroll;
+            function scroll() {
+                theScroll = new iScroll('wrapper');
+            }     
+        
+            $(document).ready(function(){
+                dbmanager.initdb();
+                
+                var roomname=getUrlParameter("name");
+                var roomid=getUrlParameter("id");
+                $("#roomName").html(roomname);
+                
+                
+                dbmanager.getSession(function(returnData){
+                        if(returnData.rows.length>0)
+                        {   
+                            loading.startLoading();
+                            bookingHistory(returnData.rows.item(0).token, $("#dateBooking").val(),roomid);
+                        }
+                    });
+                
+                
+                
+                $("#btnBook").on("click",function(startevent){
+                   dbmanager.getSession(function(returnData){
+                        if(returnData.rows.length>0)
+                        {   
+                            if($("#startTime").val()>$("#endTime").val()){
+                                alert("invalid time");
+                            }
+                            else if($("#txtTitle").val()==""){
+                                alert("Please insert title");
+                            }
+                            else if($("#txtPurpose").val()==""){
+                                alert("Please insert purpose");
+                            }
+                            else{
+                                loading.startLoading();
+                                bookRoom(returnData.rows.item(0).token, $("#txtTitle").val(), $("#txtPurpose").val(), $("#dateBooking").val(), $("#startTime").val(), $("#endTime").val(), roomid)
+                            }
+                        }
+                    });
+                    
+                });
+            });
+        </script>
     </body>
 </html>

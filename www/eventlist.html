@@ -11,10 +11,10 @@
         <script type="text/javascript" src="js/jquery-mobile/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="js/jquery-mobile/jquery.mobile-1.4.5.js"></script>  
         <script type="text/javascript" src="js/common.js"></script>
-        <script type="text/javascript" src="js/roomList.js"></script>
+        <script type="text/javascript" src="js/eventList.js"></script>
         <script type="text/javascript" src="js/web_request.js"></script>
         <link rel="stylesheet" type="text/css" href="css/common.css" />
-        <link rel="stylesheet" type="text/css" href="css/roomList.css" />
+        <link rel="stylesheet" type="text/css" href="css/eventList.css" />
         <script type="text/javascript">
             $(document).ready(function(){});
             
@@ -42,8 +42,8 @@
                 }
             }
             
-            function goCalendar(roomid, roomname){
-                window.location="calendarView.html?id="+roomid+"&name="+roomname;
+            function goCalendar(){
+                window.location="calendarView.html";
             }
         </script>
     </head>
@@ -96,7 +96,7 @@
                 dbmanager.getSession(function(returnData){
                     if(returnData.rows.length>0){
                         loading.startLoading();
-                        getRoomList(returnData.rows.item(0).token);
+                        getEventList(returnData.rows.item(0).token, returnData.rows.item(0).id);
                     }
                 });
 

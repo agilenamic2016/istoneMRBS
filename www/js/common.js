@@ -26,18 +26,31 @@ var db;
 
 var dbmanager = {
     initdb:function(){
-        db = window.openDatabase("Database", "1.0", "RBS", 200000);
+        try{db = window.openDatabase("Database", "1.0", "RBS", 200000);}
+        catch(ex){alert(ex.message);}
     },
     
     createTable:function(){
         db.transaction(createTableTransaction, this.errorExecuteSQL, this.successExecuteSQL);
         
         function createTableTransaction(t){
-            t.executeSql('CREATE TABLE IF NOT EXISTS sessionKey(token text)');
+            t.executeSql('CREATE TABLE IF NOT EXISTS sessionKey(token text, id int, registrationid text)');
+            t.executeSql('CREATE TABLE IF NOT EXISTS roomList(id text, name text, photoUrl text)');
+            t.executeSql('CREATE TABLE IF NOT EXISTS historyList(ID int, RoomID int, Title text, Purpose text, BookingDate text, StartingTime text, EndingTime text)');
         }
     },
     
-    getProfile:function(returnData){
+    logout:function(){
+        db.transaction(createTableTransaction, this.errorExecuteSQL, this.successExecuteSQL);
+        
+        function createTableTransaction(t){
+            t.executeSql('delete from sessionKey');
+            t.executeSql('delete from roomList');
+            t.executeSql('delete from historyList');
+        }
+    },
+    
+    getSession:function(returnData){
         db.transaction(function(tx){
             tx.executeSql('SELECT * FROM sessionKey', [], function(tx, rs){
                 returnData(rs);
@@ -45,14 +58,31 @@ var dbmanager = {
         });
     },
     
+     getRoomListFromDB:function(returnData){
+        db.transaction(function(tx){
+            tx.executeSql('SELECT * FROM roomList', [], function(tx, rs){
+                returnData(rs);
+          }, this.errorExecuteSQL);
+        });
+    },
+    
+    getHistoryListFromDB:function(returnData){
+        db.transaction(function(tx){
+            tx.executeSql('SELECT * FROM historyList order by BookingDate', [], function(tx, rs){
+                returnData(rs);
+          }, this.errorExecuteSQL);
+        });
+    },
+    
+    
     successExecuteSQL:function(){
         //success to executeSQL
-        alert("success");
+        //alert("success");
     },
     
     errorExecuteSQL:function(err){
         //fail executeSQL
-        alert(err.message);
+        //alert(err.message);
     },
 };
 
@@ -149,3 +179,23 @@ function addCommas(nStr) {
 function cordovaOpenLink(url){
     cordova.InAppBrowser.open(url, '_system');
 }
+
+
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+//open parameter in url
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};

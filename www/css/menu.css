@@ -14,14 +14,13 @@
 .pageone{
     background-color: white;
     width: 100%;
-    height: 20%;
+    height: 100%;
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0%;
     display: inline-block;
     position: absolute;
-    bottom: 0;
     z-index: 3;
-/*    position:     absolute;*/
+/*    position: absolute;*/
     
     -webkit-transform: translate3d(0,0,0);
     -moz-transform: translate3d(0,0,0);
@@ -32,13 +31,6 @@
     -moz-transition: transform 400ms ease;
     transition: transform 400ms ease;
 }
-
-.ui-state-active, .ui-widget-content .ui-state-active {
-  /*any CSS styles you want overriden i.e.*/
-  border: 1px solid #999999;
-  background-color: lightskyblue;
-}
-
 /* content page stry end*/
 /* ------------------------------------------------------------------------------------*/
 /* ------------------------------------------------------------------------------------*/
@@ -163,58 +155,63 @@
 /* ------------------------------------------------------------------------------------*/
 /* ------------------------------------------------------------------------------------*/
 /* ------------------------------------------------------------------------------------*/
-/* time selection*/
-.inputLabel{
-    line-height: 8vw;
-    height: 8vw;
-    width: auto;
-    display: inline-block;
-    font-size: 5vw;
-    position: absolute;
-    left:37%;
-}
-
-.comboTime{
-    line-height: 8vw;
-    height: 8vw;
-    width: 20vw;
-    display: inline-block;
-    font-size: 5vw;
-    position: absolute;
-    background: white;
-    z-index: 99;
-}
-
-.comboImg{
-    height: 8vw;
-    width: 8vw;
-    display: inline-block;
-    position: absolute;
-    left:19%;
-}
-
-#btnBook{
-    height: 9vh;
-    width: 15%;
-    background: transparent;
-    outline: none;
+/* menu btn end*/
+.menubtn{
+    height: 40vw;
+    width: 40vw;
     border: none;
-    position:absolute;
-    right: 2%;
+    outline: none;
+    background-color: transparent;
+    margin-top: 20vw;
+    padding: 0;
+    position: absolute;
+    top:10vw;
+    left:30vw;
+    font-size: 7vw;
+    font-family: 'Roboto-Bold';
 }
-/* time selection end*/
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
 
+.menubtn img{
+    height: 100%;
+    width: auto;
+    margin: 0;
+}
 
+.menubtnBook{
+    height: 40vw;
+    width: 40vw;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin-top: 20vw;
+    padding: 0;
+    position: absolute;
+    top:65vw;
+    left:30vw;
+    font-size: 7vw;
+    font-family: 'Roboto-Bold';
+}
 
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
-/* ------------------------------------------------------------------------------------*/
-/*Room Info*/
-h1{
-    font-family: "Roboto-Bold";
-    font-size: 4vw;
-    margin-left: 5px;
+.menubtnBook img{
+    height: 100%;
+    width: auto;
+    margin: 0;
+}
+
+.menubtnlogout{
+    height: 10vw;
+    width: 10vw;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: absolute;
+    top: 0;   
+    left:5px;
+    font-size: 3vw;
+    font-family: 'Roboto-Bold';
+}
+
+.menubtnlogout img{
+    height: 100%;
+    width: auto;
 }

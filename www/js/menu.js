@@ -47,12 +47,3 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
-
-//-------------------------------------------
-//-------------------------------------------
-//-------------------------------------------
-//button booking
-function btnBooking_onClick(){
-    loading.startLoading();
-    
-}
