@@ -26,10 +26,9 @@ var db;
 
 var dbmanager = {
     initdb:function(){
-//        try{db = window.openDatabase("Database", "1.0", "RBS", 200000);}
-//        catch(ex){alert(ex.message);}
-        try{db = window.sqlitePlugin.openDatabase({name: 'my.db', location: 'default'}, this.successExecuteSQL, this.errorExecuteSQL);}
+        try{db = window.openDatabase("Database", "1.0", "RBS", 200000);}
         catch(ex){alert(ex.message);}
+
     },
     
     createTable:function(){
@@ -79,12 +78,12 @@ var dbmanager = {
     
     successExecuteSQL:function(){
         //success to executeSQL
-        //alert("success");
+        alert("success");
     },
     
     errorExecuteSQL:function(err){
         //fail executeSQL
-        //alert(err.message);
+        alert(err.message);
     },
 };
 
