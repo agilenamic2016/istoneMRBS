@@ -8,6 +8,7 @@
         PhoneGap Team
     </author>
     <content src="index.html" />
+    <preference name="phonegap-version" value="3.7.0" />
     <preference name="android-build-tool" value="ant" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="portrait" />
