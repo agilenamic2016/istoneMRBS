@@ -288,9 +288,9 @@ function storeHistoryList(data){
 }
 
 function successStoreSessionKey(){
-    //alert("success store key");
+    alert("success store key");
 }
 
 function erroStoreSessionKey(err){
-    //alert("failed");
+    alert("failed");
 }
