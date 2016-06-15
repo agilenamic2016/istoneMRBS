@@ -26,7 +26,9 @@ var db;
 
 var dbmanager = {
     initdb:function(){
-        try{db = window.openDatabase("Database", "1.0", "RBS", 200000);}
+//        try{db = window.openDatabase("Database", "1.0", "RBS", 200000);}
+//        catch(ex){alert(ex.message);}
+        try{db = window.sqlitePlugin.openDatabase("Database", "1.0", "RBS", -1);}
         catch(ex){alert(ex.message);}
     },
     

@@ -37,6 +37,16 @@
             
             function onDeviceReady() {
                 //document.addEventListener("backbutton", onBackKeyDown, false);
+                dbmanager.initdb();
+                
+                dbmanager.getSession(function(returnData){
+                        if(returnData.rows.length>0)
+                        {   
+                            loading.startLoading();
+                            bookingHistory(returnData.rows.item(0).token, $("#dateBooking").val(),roomid);
+                        }
+                    });
+                
             }
             
 //            function onBackKeyDown(e) {
@@ -226,21 +236,9 @@
             }     
         
             $(document).ready(function(){
-                dbmanager.initdb();
-                
                 var roomname=getUrlParameter("name");
                 var roomid=getUrlParameter("id");
                 $("#roomName").html(roomname);
-                
-                
-                dbmanager.getSession(function(returnData){
-                        if(returnData.rows.length>0)
-                        {   
-                            loading.startLoading();
-                            bookingHistory(returnData.rows.item(0).token, $("#dateBooking").val(),roomid);
-                        }
-                    });
-                
                 
                 
                 $("#btnBook").on("click",function(startevent){

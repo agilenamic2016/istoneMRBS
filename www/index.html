@@ -27,6 +27,23 @@
             
             function onDeviceReady() {
                 document.addEventListener("backbutton", onBackKeyDown, false);
+                
+                $(document).ready(function(){
+                    dbmanager.initdb();
+                    dbmanager.createTable();
+                    
+                    $("#btnLogin").on("click",function(startevent){
+                        btnLogin_onClick();
+                    });
+                    dbmanager.getSession(function(returnData){
+
+                    if(returnData.rows.length>0)
+                        window.location="menu.html";
+                    });
+
+                });
+
+                
             }
             
             function onBackKeyDown(e) {
@@ -61,18 +78,6 @@
     <script type="text/javascript">
         app.initialize();        
         
-        $(document).ready(function(){
-            dbmanager.initdb();
-            dbmanager.createTable();
-            $("#btnLogin").on("click",function(startevent){
-                btnLogin_onClick();
-            });
-            dbmanager.getSession(function(returnData){
-                
-            if(returnData.rows.length>0)
-                window.location="menu.html";
-            });
-
-        });
+        
     </script>
 </html>

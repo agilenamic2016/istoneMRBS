@@ -27,6 +27,17 @@
             
             function onDeviceReady() {
                 //document.addEventListener("backbutton", onBackKeyDown, false);
+                $(document).ready(function(){
+                    dbmanager.initdb();
+
+                    dbmanager.getSession(function(returnData){
+                        alert(returnData.rows.item(0).token);
+                        if(returnData.rows.length>0){
+                            loading.startLoading();
+                            getRoomList(returnData.rows.item(0).token);
+                        }
+                    });
+                });
             }
             
 //            function onBackKeyDown(e) {
@@ -89,19 +100,6 @@
             }
             
             app.initialize();        
-        
-            $(document).ready(function(){
-                dbmanager.initdb();
-
-                dbmanager.getSession(function(returnData){
-                    alert(returnData.rows.item(0).token);
-                    if(returnData.rows.length>0){
-                        loading.startLoading();
-                        getRoomList(returnData.rows.item(0).token);
-                    }
-                });
-
-            });
             
         </script>
     </body>

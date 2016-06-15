@@ -27,6 +27,18 @@
             
             function onDeviceReady() {
                 document.addEventListener("backbutton", onBackKeyDown, false);
+                
+                $(document).ready(function(){
+                    dbmanager.initdb();
+
+                    dbmanager.getSession(function(returnData){
+                        if(returnData.rows.length>0){
+                            loading.startLoading();
+                            getEventList(returnData.rows.item(0).token, returnData.rows.item(0).id);
+                        }
+                    });
+
+                });
             }
             
             function onBackKeyDown(e) {
@@ -90,17 +102,7 @@
             
             app.initialize();        
         
-            $(document).ready(function(){
-                dbmanager.initdb();
-
-                dbmanager.getSession(function(returnData){
-                    if(returnData.rows.length>0){
-                        loading.startLoading();
-                        getEventList(returnData.rows.item(0).token, returnData.rows.item(0).id);
-                    }
-                });
-
-            });
+            
             
         </script>
     </body>
