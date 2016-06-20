@@ -11,10 +11,10 @@
         <script type="text/javascript" src="js/jquery-mobile/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="js/jquery-mobile/jquery.mobile-1.4.5.js"></script>  
         <script type="text/javascript" src="js/common.js"></script>
-        <script type="text/javascript" src="js/eventList.js"></script>
+        <script type="text/javascript" src="js/eventlist.js"></script>
         <script type="text/javascript" src="js/web_request.js"></script>
         <link rel="stylesheet" type="text/css" href="css/common.css" />
-        <link rel="stylesheet" type="text/css" href="css/eventList.css" />
+        <link rel="stylesheet" type="text/css" href="css/eventlist.css" />
         <script type="text/javascript">
             $(document).ready(function(){});
             
@@ -83,14 +83,14 @@
         <script type="text/javascript" src="js/iscroll-master/build/iscroll-lite.js"></script>
  
         <script type="text/javascript">
-            {alert("-3");}
+            app.initialize(); 
+            
             var theScroll;
             function scroll() {
                 theScroll = new iScroll('wrapper');
             }
-            {alert("-2");}
-            app.initialize();        
-        {alert("-4");}
+                   
+
             $(document).ready(function(){
                 dbmanager.initdb();
 
@@ -100,12 +100,10 @@
                 
                 dbmanager.getSession(function(returnData){
                     if(returnData.rows.length>0){
-                        alert("0");
+
                         loading.startLoading();
                         getEventList(returnData.rows.item(0).token, returnData.rows.item(0).id);
                     }
-                    else
-                        {alert("-1");}
                 });
 
             });

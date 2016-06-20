@@ -129,7 +129,7 @@ function storeRoomList(data){
 function getEventList(sessionkey, userid){
     var requestUrl=webUrl+"/RBS/GetMeetingsByUserId";
     var jsonObj = {SessionKey :sessionkey, UserID: userid};
-    alert("1");
+    
     $.ajax({
       url: requestUrl,
       type: "POST",
@@ -140,7 +140,7 @@ function getEventList(sessionkey, userid){
       timeout: apiTimeout,    
       success: function(data, status, xhr) {
         debugger;  
-        alert("2");
+        
         //alert(JSON.stringify(data)); 
         if(data.length>0)
         {
