@@ -140,7 +140,7 @@ function getEventList(sessionkey, userid){
       timeout: apiTimeout,    
       success: function(data, status, xhr) {
         debugger;    
-        alert(JSON.stringify(data)); 
+        //alert(JSON.stringify(data)); 
         if(data.length>0)
         {
             $.each(data, function(key, value){
