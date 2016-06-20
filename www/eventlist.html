@@ -83,13 +83,14 @@
         <script type="text/javascript" src="js/iscroll-master/build/iscroll-lite.js"></script>
  
         <script type="text/javascript">
+            {alert("-3");}
             var theScroll;
             function scroll() {
                 theScroll = new iScroll('wrapper');
             }
-            
+            {alert("-2");}
             app.initialize();        
-        
+        {alert("-4");}
             $(document).ready(function(){
                 dbmanager.initdb();
 
@@ -99,9 +100,12 @@
                 
                 dbmanager.getSession(function(returnData){
                     if(returnData.rows.length>0){
+                        alert("0");
                         loading.startLoading();
                         getEventList(returnData.rows.item(0).token, returnData.rows.item(0).id);
                     }
+                    else
+                        {alert("-1");}
                 });
 
             });
