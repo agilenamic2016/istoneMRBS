@@ -143,13 +143,14 @@ function getEventList(sessionkey, userid){
         //alert(JSON.stringify(data)); 
         if(data.length>0)
         {
-            $.each(data, function(key, value){
+        try{$.each(data, function(key, value){
                 var newdate=value.BookingDate.split("T");
                 var newsTime=value.StartingTime.substr(0,2)+":"+value.StartingTime.substr(2,2);
                 var neweTime=value.EndingTime.substr(0,2)+":"+value.EndingTime.substr(2,2);
 
                 $("#scrollul").append("<li class='scrollli' id='featuredrow1'><table style='height:100%; width:100%;'><tr><td><h1 class='listviewitemtitle'>"+value.Title+"</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'>DateTime:"+newdate[0]+" "+newsTime+" - "+neweTime+"</p></td></tr></table> </li>");
-            });     
+            });   }catch(ex){alert(ex.message)}
+              
         }
         else
         {
