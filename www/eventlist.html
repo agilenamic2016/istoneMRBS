@@ -50,9 +50,9 @@
     <body id="pageBody" class="appBody">
         <div data-role="app" class="app" id="app">
             <div class="menuheader">
-                <div class="menuheaderleft" style="display:none;">
-                    <button class="buttonbg">
-                        <img class="menubutton" src="img/drawer.png"/>
+                <div class="menuheaderleft">
+                    <button class="buttonbg" id="buttonbg">
+                        <img class="menubutton" src="img/arrowleft.png"/>
                     </button>
                 </div>
                 <div class="menuheaderright">
@@ -93,6 +93,10 @@
             $(document).ready(function(){
                 dbmanager.initdb();
 
+                $("#buttonbg").on("click",function(startevent){
+                    window.history.back();
+                });
+                
                 dbmanager.getSession(function(returnData){
                     if(returnData.rows.length>0){
                         loading.startLoading();

@@ -78,12 +78,12 @@ var dbmanager = {
     
     successExecuteSQL:function(){
         //success to executeSQL
-        alert("success");
+        //alert("success");
     },
     
     errorExecuteSQL:function(err){
         //fail executeSQL
-        alert(err.message);
+        //alert(err.message);
     },
 };
 

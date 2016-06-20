@@ -3,7 +3,7 @@ var webUrl = domainUrl+"/RBS/api";
 var imageUrl=domainUrl+"/upload/";
 //var webUrl = "http://localhost:11175/api";
 
-var apiTimeout=10000;
+var apiTimeout=20000;
 
 function requetLogin(userName, pwd){
     var requestUrl=webUrl+"/RBS/getlogin";
@@ -140,23 +140,21 @@ function getEventList(sessionkey, userid){
       timeout: apiTimeout,    
       success: function(data, status, xhr) {
         debugger;    
-        alert(JSON.stringify(data));
-//        storeRoomList(data);
-        
-        
-//        dbmanager.getRoomListFromDB(function(returnData){
-//            
-//            if(returnData.rows.length>0)
-//            {
-//                $.each(returnData.rows, function(key, value){
-//                    $("#scrollul").append("<li class='scrollli' id='featuredrow1' onclick='goCalendar();'><table style='height:100%; width:100%;'><tr><td style='width:20%' ><img class='listviewimg' src='"+imageUrl+value.photoUrl+"'></td><td><h1 class='listviewitemtitle'>"+value.name+"</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'></p></td></tr></table></li>");
-//                });       
-//            }
-//            else
-//            {
-//                alert("no data");
-//            }
-//        });
+        alert(JSON.stringify(data)); 
+        if(data.length>0)
+        {
+            $.each(data, function(key, value){
+                var newdate=value.BookingDate.split("T");
+                var newsTime=value.StartingTime.substr(0,2)+":"+value.StartingTime.substr(2,2);
+                var neweTime=value.EndingTime.substr(0,2)+":"+value.EndingTime.substr(2,2);
+
+                $("#scrollul").append("<li class='scrollli' id='featuredrow1'><table style='height:100%; width:100%;'><tr><td><h1 class='listviewitemtitle'>"+value.Title+"</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'>DateTime:"+newdate[0]+" "+newsTime+" - "+neweTime+"</p></td></tr></table> </li>");
+            });     
+        }
+        else
+        {
+            alert("no data");
+        }
     
         loading.endLoading();
       },
@@ -193,9 +191,10 @@ function bookRoom(sessionkey, title, purpose, date, stime, etime, roomid){
       success: function(data, status, xhr) {
         debugger;    
 
-        alert("Room booking successfully");
-    
+        alert("Room Booked Successfully.");
+        
         loading.endLoading();
+        window.location="attlist.html?id="+data[0].ID;
       },
       error:function (xhr, ajaxOptions, thrownError){
         debugger;
@@ -287,10 +286,77 @@ function storeHistoryList(data){
     });
 }
 
+function getUserList(sessionkey){
+    var requestUrl=webUrl+"/RBS/GetUsers";
+    var jsonObj = {SessionKey :sessionkey};
+    
+    $.ajax({
+      url: requestUrl,
+      type: "POST",
+      ContentType: "application/json",
+      async: true, 
+      dataType : "JSON",
+      data:jsonObj,
+      timeout: apiTimeout,    
+      success: function(data, status, xhr) {
+        debugger;    
+        
+        if(data.length>0)
+        {
+            $.each(data, function(key, value){
+                $("#scrollul").append("<li class='scrollli' id='featuredrow1'><table style='height:100%; width:100%;'><tr><td><h1 class='listviewitemtitle'>"+value.Username+"</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'></p><td><input type='checkbox' id='userlist' class='userlist' value='"+value.ID+"' style='float:right'></td></tr></table></li>");
+            });       
+        }
+        else
+        {                
+            alert("no data");
+        }
+
+    
+        loading.endLoading();
+      },
+      error:function (xhr, ajaxOptions, thrownError){
+        debugger;
+        
+        alert("Failed to call server "+JSON.stringify(xhr));
+        loading.endLoading();
+      }
+    })
+}
+
+
+function addAttList(sessionkey, meetingid, ID){
+    var requestUrl=webUrl+"/RBS/AddAttendee";
+    var jsonObj = {SessionKey :sessionkey, MeetingID:meetingid, Users:ID};
+
+    $.ajax({
+      url: requestUrl,
+      type: "POST",
+      ContentType: "application/json",
+      async: true, 
+      dataType : "JSON",
+      data:jsonObj,
+      timeout: apiTimeout,    
+      success: function(data, status, xhr) {
+        debugger;    
+        
+        loading.endLoading();
+        window.location="menu.html";
+      },
+      error:function (xhr, ajaxOptions, thrownError){
+        debugger;
+        
+        alert("Failed to call server "+JSON.stringify(xhr));
+        loading.endLoading();
+      }
+    })
+}
+
+
 function successStoreSessionKey(){
-    alert("success store key");
+   // alert("success store key");
 }
 
 function erroStoreSessionKey(err){
-    alert("failed");
+  //  alert("failed");
 }
