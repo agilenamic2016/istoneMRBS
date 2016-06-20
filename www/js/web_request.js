@@ -157,7 +157,7 @@ function getEventList(sessionkey, userid){
         {
             alert("no data");
         }
-        alert("1");
+
         loading.endLoading();
       },
       error:function (xhr, ajaxOptions, thrownError){
