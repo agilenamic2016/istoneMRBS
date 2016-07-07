@@ -69,6 +69,7 @@
     border-top:1px solid #fff;
     border-bottom: 1px dotted black;  
     overflow: hidden;
+    max-height: 25vw;
 }
 
 .scrollli:hover {
@@ -84,7 +85,7 @@
 
 .listviewimg{
     width: 25vw;
-    height: auto;
+    height: 25vw;
     display: block;
 }
 

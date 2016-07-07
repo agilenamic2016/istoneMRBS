@@ -38,6 +38,7 @@ var dbmanager = {
             t.executeSql('CREATE TABLE IF NOT EXISTS sessionKey(token text, id int, registrationid text)');
             t.executeSql('CREATE TABLE IF NOT EXISTS roomList(id text, name text, photoUrl text)');
             t.executeSql('CREATE TABLE IF NOT EXISTS historyList(ID int, RoomID int, Title text, Purpose text, BookingDate text, StartingTime text, EndingTime text)');
+            t.executeSql('CREATE TABLE IF NOT EXISTS userhistoryList(ID int, RoomID int, Title text, Purpose text, BookingDate text, StartingTime text, EndingTime text)');
         }
     },
     
@@ -69,12 +70,19 @@ var dbmanager = {
     
     getHistoryListFromDB:function(returnData){
         db.transaction(function(tx){
-            tx.executeSql('SELECT * FROM historyList order by BookingDate', [], function(tx, rs){
+            tx.executeSql('SELECT * FROM historyList order by BookingDate, StartingTime', [], function(tx, rs){
                 returnData(rs);
           }, this.errorExecuteSQL);
         });
     },
     
+    getUserHistoryListFromDB:function(returnData){
+        db.transaction(function(tx){
+            tx.executeSql('SELECT * FROM userhistoryList order by BookingDate, StartingTime', [], function(tx, rs){
+                returnData(rs);
+          }, this.errorExecuteSQL);
+        });
+    },
     
     successExecuteSQL:function(){
         //success to executeSQL

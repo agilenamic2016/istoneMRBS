@@ -26,12 +26,12 @@
             var menuStatus;
             
             function onDeviceReady() {
-                //document.addEventListener("backbutton", onBackKeyDown, false);
+                document.addEventListener("backbutton", onBackKeyDown, false);
             }
             
             function onBackKeyDown(e) {
               e.preventDefault();
-              navigator.notification.confirm("Are you sure you want to exit ?", onConfirm, "Confirmation", "Yes,No");     
+              window.location="menu.html":
             }
             
             function onConfirm(button) {
@@ -56,9 +56,14 @@
                     </button>
                 </div>
                 <div class="menuheaderright">
-                     <button class="pagetitle">MRBS</button>
-                    <button class="pageTitileImgBG" id="pageTitileImgBG" onclick=""><img class="pageTitileImg" src="img/trending-w.png"/></button>
+                     <button class="pagetitle"><img class="pageTitileImg" src="img/companylogo.png"/>RBS</button>
+<!--                    <button class="pageTitileImgBG" id="pageTitileImgBG" onclick=""></button>-->
                 </div>
+            </div>
+            <div class="actionDiv"><button class="actiontitle"></button>
+                <button class="confirmButton" id="buttonConfirm">
+                    <img src="img/myevent.jpg"/>
+                </button>
             </div>
             <div class="content">
                 <div class="pageone">
@@ -95,7 +100,11 @@
                 dbmanager.initdb();
 
                 $("#buttonbg").on("click",function(startevent){
-                    window.history.back();
+                    window.location="menu.html";
+                });
+                
+                $("#buttonConfirm").on("click",function(startevent){
+                    window.location="calendarOverView.html";
                 });
                 
                 dbmanager.getSession(function(returnData){

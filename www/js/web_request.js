@@ -1,4 +1,4 @@
-var domainUrl="http://54.89.107.103"
+var domainUrl="http://52.207.238.42"
 var webUrl = domainUrl+"/RBS/api";
 var imageUrl=domainUrl+"/upload/";
 //var webUrl = "http://localhost:11175/api";
@@ -142,21 +142,43 @@ function getEventList(sessionkey, userid){
         debugger;  
         
         //alert(JSON.stringify(data)); 
-        if(data.length>0)
-        {
-        try{$.each(data, function(key, value){
-                var newdate=value.BookingDate.split("T");
-                var newsTime=value.StartingTime.substr(0,2)+":"+value.StartingTime.substr(2,2);
-                var neweTime=value.EndingTime.substr(0,2)+":"+value.EndingTime.substr(2,2);
+        
+        storeHistoryList(data);
+        
+        
+        dbmanager.getHistoryListFromDB(function(returnData){
+        
+            if(returnData.rows.length>0)
+            {
+                $.each(returnData.rows, function(key, value){
+                    var newdate=value.BookingDate.split("T");
+                    var newsTime=value.StartingTime.substr(0,2)+":"+value.StartingTime.substr(2,2);
+                    var neweTime=value.EndingTime.substr(0,2)+":"+value.EndingTime.substr(2,2);
 
-                $("#scrollul").append("<li class='scrollli' id='featuredrow1'><table style='height:100%; width:100%;'><tr><td><h1 class='listviewitemtitle'>"+value.Title+"</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'>DateTime:"+newdate[0]+" "+newsTime+" - "+neweTime+"</p></td></tr></table> </li>");
-            });   }catch(ex){alert(ex.message)}
-              
-        }
-        else
-        {
-            alert("no data");
-        }
+                    $("#scrollul").append("<li class='scrollli' id='featuredrow1'><table style='height:100%; width:100%;'><tr><td><h1 class='listviewitemtitle'>"+value.Title+"</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'>DateTime: "+newdate[0]+" "+newsTime+" - "+neweTime+"</p></td></tr></table> </li>");
+                });       
+            }
+            else
+            {
+                alert("no data");
+            }
+        });
+
+//        if(data.length>0)
+//        {
+//        try{$.each(data, function(key, value){
+//                var newdate=value.BookingDate.split("T");
+//                var newsTime=value.StartingTime.substr(0,2)+":"+value.StartingTime.substr(2,2);
+//                var neweTime=value.EndingTime.substr(0,2)+":"+value.EndingTime.substr(2,2);
+//
+//                $("#scrollul").append("<li class='scrollli' id='featuredrow1'><table style='height:100%; width:100%;'><tr><td><h1 class='listviewitemtitle'>"+value.Title+"</h1><p class='listviewitemseperator'>&nbsp;</p><p class='listviewitemdetails'>DateTime:"+newdate[0]+" "+newsTime+" - "+neweTime+"</p></td></tr></table> </li>");
+//            });   }catch(ex){alert(ex.message)}
+//              
+//        }
+//        else
+//        {
+//            alert("no data");
+//        }
 
         loading.endLoading();
       },
@@ -167,6 +189,34 @@ function getEventList(sessionkey, userid){
         loading.endLoading();
       }
     })
+}
+
+
+function storeUserHistoryList(data){
+   
+    db.transaction(function(tx) {
+        tx.executeSql('DELETE FROM userhistoryList');    
+    });
+    
+    $.each(data, function(key, value){
+        
+        var dataObj = {
+        values1 : [value.ID, value.RoomID, value.Title, value.Purpose, value.BookingDate, value.StartingTime, value.EndingTime]
+        };
+
+        insertUserHistoryListList(dataObj);
+
+        function insertUserHistoryListList(dataObj) {
+            db.transaction(function(tx) {
+                tx.executeSql(
+                    'INSERT INTO userhistoryList (ID, RoomID, Title, Purpose, BookingDate, StartingTime, EndingTime) VALUES (?,?,?,?,?,?,?)', 
+                    dataObj.values1,
+                    successStoreSessionKey,
+                    erroStoreSessionKey
+                );
+            });
+        }
+    });
 }
 
 
