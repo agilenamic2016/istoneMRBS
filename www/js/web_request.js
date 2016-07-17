@@ -1,4 +1,4 @@
-var domainUrl="http://52.207.238.42"
+var domainUrl="http://52.207.238.42";
 var webUrl = domainUrl+"/RBS/api";
 var imageUrl=domainUrl+"/upload/";
 //var webUrl = "http://localhost:11175/api";
@@ -7,6 +7,7 @@ var apiTimeout=20000;
 
 function requetLogin(userName, pwd){
     var requestUrl=webUrl+"/RBS/getlogin";
+    
     var jsonObj = {UserName :userName,Password :pwd, TokenID: "123"};
     
     $.ajax({
