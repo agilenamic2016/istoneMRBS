@@ -72,7 +72,13 @@
             if(returnData.rows.length>0)
                 window.location="menu.html";
             });
-
+            
+            try{
+                app.initPushNotificationRegister();
+            }
+            catch(ex){
+//                        alert(ex.message);
+            }
         });
     </script>
 </html>

@@ -191,8 +191,25 @@
                 <div class="inputField" style="top:67%;">
                     <button id="btnBook"><img src="img/booknow.png" class="buttonImg"/></button>
                 </div>
-                <div class="inputField" style="bottom:15%;"><h1>Booking history</h1></div>
-                <div class="pageone">
+                <div class="inputField" style="top:78%;width:100%">
+                    <span class="inputLabel" style="left:0px;">&nbsp;&nbsp;&nbsp;Repeat</span>
+                    <select id="repeatType" class="comboTime" style="left:30%;width:50%;" onchange="changeRepeat();">
+                    <option>No Repeat</option>
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Monthly</option>
+                </select>   
+                </div>
+                <div class="inputField" style="top:85%;width:100%;display:none;" id="endDateDiv">
+                    <span class="inputLabel" style="left:0px;">&nbsp;&nbsp;&nbsp;Start Date</span>
+                    <input id="startDate" class="comboTime" style="left:30%;width:50%;"/>  
+                </div>
+                <div class="inputField" style="top:92%;width:100%;display:none;" id="startDateDiv">
+                    <span class="inputLabel" style="left:0px;">&nbsp;&nbsp;&nbsp;End Date </span>
+                    <input id="endDate" class="comboTime" style="left:30%;width:50%;" type="text"/>
+                </div>
+                <div class="inputField" style="bottom:15%;display:none;"><h1>Booking history</h1></div>
+                <div class="pageone" style="display:none">
                     <div class="wrapper" id="wrapper">
                         <div class="scroll-content" id="scroll-content">
                             <ul class="scrollul" id="scrollul">
@@ -219,7 +236,12 @@
             $( "#datepicker" ).datepicker({ minDate: 0,
                                             altField: '#dateBooking'
                                           });
-            
+              $( function() {
+                $( "#startDate" ).datepicker();
+              } );
+            $( function() {
+                $( "#endDate" ).datepicker();
+              } );
             var theScroll;
             function scroll() {
                 theScroll = new iScroll('wrapper');
@@ -233,13 +255,13 @@
                 $("#roomName").html(roomname);
                 
                 
-                dbmanager.getSession(function(returnData){
-                        if(returnData.rows.length>0)
-                        {   
-                            loading.startLoading();
-                            bookingHistory(returnData.rows.item(0).token, $("#dateBooking").val(),roomid);
-                        }
-                    });
+//                dbmanager.getSession(function(returnData){
+//                        if(returnData.rows.length>0)
+//                        {   
+//                            loading.startLoading();
+//                            bookingHistory(returnData.rows.item(0).token, $("#dateBooking").val(),roomid);
+//                        }
+//                    });
                 
                 
                 $("#buttonbg").on("click",function(startevent){
@@ -263,13 +285,25 @@
                             }
                             else{
                                 loading.startLoading();
-                                bookRoom(returnData.rows.item(0).token, $("#txtTitle").val(), $("#txtPurpose").val(), $("#dateBooking").val(), $("#startTime").val(), $("#endTime").val(), roomid)
+                                bookRoom(returnData.rows.item(0).token, $("#txtTitle").val(), $("#txtPurpose").val(), $("#dateBooking").val(), $("#startTime").val(), $("#endTime").val(), roomid, $("#repeatType").val(),$("#startDate").val(),$("#endDate").val())
                             }
                         }
                     });
                     
                 });
             });
+            
+            function changeRepeat(){
+                if($("#repeatType").val()=="No Repeat"){
+                    $("#endDateDiv").css("display", "none");
+                    $("#startDateDiv").css("display", "none");
+                }
+                else{
+                    $("#endDateDiv").css("display", "");
+                    $("#startDateDiv").css("display", "");
+                }
+                
+            }
         </script>
     </body>
 </html>

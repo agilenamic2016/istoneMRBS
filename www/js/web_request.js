@@ -3,12 +3,12 @@ var webUrl = domainUrl+"/RBS/api";
 var imageUrl=domainUrl+"/upload/";
 //var webUrl = "http://localhost:11175/api";
 
-var apiTimeout=20000;
+var apiTimeout=30000;
 
-function requetLogin(userName, pwd){
+function requetLogin(userName, pwd, regid){
     var requestUrl=webUrl+"/RBS/getlogin";
     
-    var jsonObj = {UserName :userName,Password :pwd, TokenID: "123"};
+    var jsonObj = {UserName :userName,Password :pwd, TokenID: regid};
     
     $.ajax({
       url: requestUrl,
@@ -221,17 +221,44 @@ function storeUserHistoryList(data){
 }
 
 
-function bookRoom(sessionkey, title, purpose, date, stime, etime, roomid){
+function bookRoom(sessionkey, title, purpose, date, stime, etime, roomid, repeattype, startdate, enddate){
     var requestUrl=webUrl+"/RBS/Booking";
     
     var newdate=date.split("/");//date.substring(7,4);//+"-"+date.substring(0,2)+"-"+date.substring(3,2);
     var newstime=stime.split(":")//stime.substring(0,2);//+stime.substring(3,2);
     var newetime=etime.split(":")//etime.substring(0,2);//+etime.substring(3,2);
+    var submitStartDate="";
+    var submitEndDate="";
     date=newdate[2]+"-"+newdate[0]+"-"+newdate[1];
     stime=newstime[0]+newstime[1];
     etime=newetime[0]+newetime[1];
     
-    var jsonObj = {SessionKey :sessionkey, Title: title, Purpose: purpose, BookingDate:date, StartingTime:stime, EndingTime:etime, RoomID:roomid};
+    if(repeattype.trim()=="No Repeat"){
+        submitStartDate=date;
+        submitEndDate=date;
+    }   
+    else{
+        var newstartdate=startdate.split("/");//date.substring(7,4);//+"-"+date.substring(0,2)+"-"+date.substring(3,2);
+        submitStartDate=newstartdate[2]+"-"+newstartdate[0]+"-"+newstartdate[1];
+
+        var newenddate=enddate.split("/");//date.substring(7,4);//+"-"+date.substring(0,2)+"-"+date.substring(3,2);
+        submitEndDate=newenddate[2]+"-"+newenddate[0]+"-"+newenddate[1];
+            
+    }
+    
+    
+    var repeattypeno=0;
+    
+    if(repeattype=="No Repeat")
+        repeattypeno=0;
+    else if(repeattype=="Daily")
+        repeattypeno=1;
+    else if(repeattype=="Weekly")
+        repeattypeno=2;
+    else if(repeattype=="Monthly")
+        repeattypeno=3;
+    
+    var jsonObj = {SessionKey :sessionkey, Title: title, Purpose: purpose, BookingDate:date, StartingTime:stime, EndingTime:etime, RoomID:roomid, RecurrenceType:repeattypeno, SCCStartDate:submitStartDate, SCCEndDate:submitEndDate};
 
     $.ajax({
       url: requestUrl,

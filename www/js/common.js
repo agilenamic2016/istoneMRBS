@@ -39,6 +39,7 @@ var dbmanager = {
             t.executeSql('CREATE TABLE IF NOT EXISTS roomList(id text, name text, photoUrl text)');
             t.executeSql('CREATE TABLE IF NOT EXISTS historyList(ID int, RoomID int, Title text, Purpose text, BookingDate text, StartingTime text, EndingTime text)');
             t.executeSql('CREATE TABLE IF NOT EXISTS userhistoryList(ID int, RoomID int, Title text, Purpose text, BookingDate text, StartingTime text, EndingTime text)');
+            t.executeSql('CREATE TABLE IF NOT EXISTS RegID(ID text)');
         }
     },
     
@@ -79,6 +80,14 @@ var dbmanager = {
     getUserHistoryListFromDB:function(returnData){
         db.transaction(function(tx){
             tx.executeSql('SELECT * FROM userhistoryList order by BookingDate, StartingTime', [], function(tx, rs){
+                returnData(rs);
+          }, this.errorExecuteSQL);
+        });
+    },
+    
+    getRegID:function(returnData){
+        db.transaction(function(tx){
+            tx.executeSql('SELECT * FROM RegID', [], function(tx, rs){
                 returnData(rs);
           }, this.errorExecuteSQL);
         });
