@@ -20,8 +20,9 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        
+        alert("devie ready");
         var push = PushNotification.init({
+            alert("init correctly");
             android: {
                 senderID: "804997115089"
             },
