@@ -20,39 +20,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        alert("devie ready");
-        var push = PushNotification.init({
-            alert("init correctly");
-            android: {
-                senderID: "804997115089"
-            },
-            browser: {
-                pushServiceURL: 'http://push.api.phonegap.com/v1/push'
-            },
-            ios: {
-                alert: "true",
-                badge: "true",
-                sound: "true"
-            },
-            windows: {}
-        });
-
-        push.on('registration', function(data) {
-            alert(data.registrationId) ;
-        });
-
-        push.on('notification', function(data) {
-            // data.message,
-            // data.title,
-            // data.count,
-            // data.sound,
-            // data.image,
-            // data.additionalData
-        });
-
-        push.on('error', function(e) {
-             alert(e.message);
-        });
+        
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
