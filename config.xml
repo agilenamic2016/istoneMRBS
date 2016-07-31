@@ -52,7 +52,10 @@
     <gap:plugin name="cordova-plugin-vibration" source="npm"/>
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0"/>
     <gap:plugin name="com.phonegap.plugin.statusbar" spec="1.1.0" source="pgb"/>
-    <gap:plugin name="com.phonegap.plugins.PushPlugin" spec="2.5.0" source="pgb"/>
+    <preference name="android-build-tool" value="gradle" />
+    <plugin name="phonegap-plugin-push" source="npm">
+        <param name="SENDER_ID" value="804997115089" />
+    </plugin>
     <gap:plugin name="nl.x-services.plugins.socialsharing"/>
     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
         <param name="APP_ID" value="1618299145090032" />
