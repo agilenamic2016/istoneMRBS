@@ -32,78 +32,56 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    },
-    
-    initPushNotificationRegister: function(){
-        var pushNotification = window.plugins.pushNotification;
         
-        
-        if ( device.platform == 'android' || device.platform == 'Android'){
-            pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"804997115089","ecb":"app.onNotificationGCM"});
-        } 
-        else {
-            pushNotification.register(app.tokenHandler,app.errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"});
-        }
+        app.setupPush();
+    },
+    
+    setupPush: function() {
+        console.log('calling push init');
+        var push = PushNotification.init({
+            "android": {
+                "senderID": "804997115089"
+            },
+            "ios": {
+                "sound": true,
+                "vibration": true,
+                "badge": true
+            },
+            "windows": {}
+        });
+        console.log('after init');
 
-    },
-    
-    // result contains any message sent from the plugin call
-    successHandler: function(result) {
-//        alert('Callback Success! Result = '+result);
-    },
-    
-    errorHandler:function(error) {
-//        alert(error);
-    },
-    
-    onNotificationGCM: function(e) {
-        switch( e.event )
-        {
-            case 'registered':
-                var regid=e.regid;
-                storeRegID(regid);
-            break;
- 
-            case 'message':
-              // this is the actual push notification. its format depends on the data model from the push server
-//              alert('message = '+e.message+' msgcnt = '+e.msgcnt);
-            break;
- 
-            case 'error':
-//              alert('GCM error = '+e.msg);
-            break;
- 
-            default:
-//              alert('An unknown GCM event has occurred');
-              break;
-        }
-    },
-    
-    tokenHandler: function(result) {
-        // Your iOS push server needs to know the token before it can push to this device
-        // here is where you might want to send it the token for later use.
-//        alert('device token = ' + result);
-//        $("#redidtxtareas").val(result);
-        var regid=e.regid;
-        storeRegID(regid);
-    },
-    
-    onNotificationAPN: function(event) {
-        if ( event.alert )
-        {
-            navigator.notification.alert(event.alert);
-        }
+        push.on('registration', function(data) {
+            console.log('registration event: ' + data.registrationId);
+			alert(data.registrationId);
+            var oldRegId = localStorage.getItem('registrationId');
+            if (oldRegId !== data.registrationId) {
+                // Save new registration ID
+                localStorage.setItem('registrationId', data.registrationId);
+                // Post registrationId to your app server as the value has changed
+            }
 
-        if ( event.sound )
-        {
-            var snd = new Media(event.sound);
-            snd.play();
-        }
+            var parentElement = document.getElementById('registration');
+            var listeningElement = parentElement.querySelector('.waiting');
+            var receivedElement = parentElement.querySelector('.received');
 
-        if ( event.badge )
-        {
-            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
-        }
+            listeningElement.setAttribute('style', 'display:none;');
+            receivedElement.setAttribute('style', 'display:block;');
+        });
+
+        push.on('error', function(e) {
+            console.log("push error = " + e.message);
+        });
+
+        push.on('notification', function(data) {
+            console.log('notification event');
+            navigator.notification.alert(
+                data.message,         // message
+                null,                 // callback
+                data.title,           // title
+                'Ok'                  // buttonName
+            );
+       });
     }
 };
 
